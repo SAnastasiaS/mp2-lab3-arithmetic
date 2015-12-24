@@ -106,6 +106,7 @@ string RPN::GetExpression(string input)
 					}
 
 					output += " "; //Дописываем после числа пробел в строку с выражением
+					i--;
 
 				}
 	}

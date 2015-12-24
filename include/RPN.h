@@ -10,10 +10,10 @@ class RPN//Reverse Polish Notation
 {
 public:
 	static double Calculate(string input);
-	
+	static string GetExpression(string input);
 	
 private:
-	static string GetExpression(string input);
+	
 	static string InsertValue(string input);
 	static double Counting(string input);
 	static bool IsDelimeter(char c);
