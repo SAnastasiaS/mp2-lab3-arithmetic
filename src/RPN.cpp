@@ -168,6 +168,7 @@ double RPN::Counting(string input)
 double RPN::Calculate(string input)
 {
 	cout << input << endl;
+	/*cout << GetExpression(input)<< endl;*/
     string output = InsertValue(GetExpression(input));//Преобразовываем выражение в постфиксную запись и замена переменных
     double result = Counting(output); //Решаем полученное выражение
     return result; //Возвращаем результат
@@ -192,12 +193,12 @@ string RPN::InsertValue(string input/*, string variables*/)
 					break; //Если символ - последний, то выходим из цикла
 			}
 			while ((IsDelimeter(input[i])!=true) && (IsOperator(input[i])!=true));
-			--i;
+			
 			cout << "Enter the value of variable " << variable <<endl;
 			cin >> var;
 
 			output += var + " " ; //Дописываем после числа пробел в строку с выражением
-			//i--;
+			i--;
 		}
 		else
 		{
