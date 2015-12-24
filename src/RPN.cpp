@@ -38,7 +38,7 @@ short unsigned int RPN::GetPriority(char s)
 
 string RPN::GetExpression(string input)
 {
-	string output/* = string.empty()*/; //Строка для хранения выражения//?!
+	string output; //Строка для хранения выражения//?!
 	Stack<char> operStack(MAX); //Стек для хранения операторов
 
 	for (int i = 0; i < input.length(); i++) //Для каждого символа во входной строке
@@ -106,9 +106,7 @@ string RPN::GetExpression(string input)
 					}
 
 					output += " "; //Дописываем после числа пробел в строку с выражением
-					//i--;
 
-					//output += operStack.pop().ToString() + " ";//?!
 				}
 	}
 
@@ -164,4 +162,48 @@ double RPN::Counting(string input)
         }
     }
     return temp.Peek(); //Забираем результат всех вычислений из стека и возвращаем его
+}
+
+double RPN::Calculate(string input)
+{
+	cout << input << endl;
+    string output = InsertValue(GetExpression(input));//Преобразовываем выражение в постфиксную запись и замена переменных
+    double result = Counting(output); //Решаем полученное выражение
+    return result; //Возвращаем результат
+}
+
+string RPN::InsertValue(string input/*, string variables*/)
+{
+		string output;
+		
+		string var;
+	for (int i = 0; i < input.length(); i++) //Для каждого символа во входной строке
+	{
+		string variable;
+		if ((islower(input[i])) || isupper(input[i])) //Если буква
+		{
+			//Читаем до разделителя или оператора, что бы получить букву
+			do
+			{
+				variable += input[i];
+				++i;
+				if (i == input.length()) 
+					break; //Если символ - последний, то выходим из цикла
+			}
+			while ((IsDelimeter(input[i])!=true) && (IsOperator(input[i])!=true));
+			--i;
+			cout << "Enter the value of variable " << variable <<endl;
+			cin >> var;
+
+			output += var + " " ; //Дописываем после числа пробел в строку с выражением
+			//i--;
+		}
+		else
+		{
+			if (i == (input.length()-1)) 
+					break;
+			output += input[i];
+		}
+	}
+	return output;
 }

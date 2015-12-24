@@ -1,12 +1,10 @@
 #include "RPN.h"
 int main()
 {
-	string l = "2^3+(9+1)*2";
-	string r;
-	r = RPN::GetExpression(l);//убрать в private
-		cout << r << endl;
-	double b = RPN::Counting(r);
-
-	cout << b << endl;
+	cout << "Enter an expression"<< endl;
+	string l;
+	cin >> l;
+	double r = RPN::Calculate(l);//Неправильно считает!
+    cout << r << endl;
 	return 0;
 }
