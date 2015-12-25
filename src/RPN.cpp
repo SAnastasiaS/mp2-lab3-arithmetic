@@ -28,7 +28,7 @@ short unsigned int RPN::GetPriority(char s)
 	case '(': return 0;
 	case ')': return 1;
 	case '+': return 2;
-	case '-': return 3;
+	case '-': return 2;
 	case '*': return 4;
 	case '/': return 4;
 	case '^': return 5;
@@ -46,12 +46,12 @@ string RPN::GetExpression(string input)
 		//Разделители пропускаем
 		if (IsDelimeter(input[i]))//ЗАМЕНИТЬ ЦИКЛОМ?!
 			continue; //Переходим к следующему символу
-
+		 
 		//Если символ - цифра, то считываем все число
 		if (isdigit(input[i])) //Если цифра
 		{
 			//Читаем до разделителя или оператора, что бы получить число
-			while ((IsDelimeter(input[i])!=true) && (IsOperator(input[i])!=true))
+			while ((IsDelimeter(input[i])!=true) && (!IsOperator(input[i])))
 			{
 				output += input[i]; //Добавляем каждую цифру числа к нашей строке
 				i++; //Переходим к следующему символу
@@ -84,8 +84,8 @@ string RPN::GetExpression(string input)
 				}
 				else //Если любой другой оператор!!!ИЗМЕНЕНО!
 				{
-					if ((operStack.getTop() > -1)) //Если в стеке есть элементы
-						if (GetPriority(input[i]) <= GetPriority(operStack.Peek())) //И если приоритет нашего оператора меньше или равен приоритету оператора на вершине стека
+					//if ((operStack.getTop() > -1)) //Если в стеке есть элементы
+						while ((operStack.getTop() > -1) && (GetPriority(input[i]) <= GetPriority(operStack.Peek()))) //И если приоритет нашего оператора меньше или равен приоритету оператора на вершине стека
 						{
 							output.push_back(operStack.pop());
 							output += " ";
@@ -168,8 +168,9 @@ double RPN::Counting(string input)
 double RPN::Calculate(string input)
 {
 	cout << input << endl;
-	/*cout << GetExpression(input)<< endl;*/
-    string output = InsertValue(GetExpression(input));//Преобразовываем выражение в постфиксную запись и замена переменных
+	string polish = GetExpression(input);
+	cout << polish << endl;
+    string output = InsertValue(polish);//Преобразовываем выражение в постфиксную запись и замена переменных
     double result = Counting(output); //Решаем полученное выражение
     return result; //Возвращаем результат
 }
