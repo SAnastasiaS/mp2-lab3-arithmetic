@@ -14,7 +14,7 @@ private:
     int top;                          
 public:
     Stack(int = 10);                 
-    Stack(const Stack<T> &);          
+/*    Stack(const Stack<T> &);*/          
     ~Stack();                         
  
     inline void push(const T & );     
@@ -34,16 +34,16 @@ Stack<T>::Stack(int maxSize) :
     top = -1; 
 }
  
-template <typename T>
-Stack<T>::Stack(const Stack<T> & otherStack) :
-    size(otherStack.getStackSize()) 
-{
-    stackPtr = new T[size]; 
-    top = otherStack.getTop();
- 
-    for(int ix = 0; ix < top; ix++)
-        stackPtr[ix] = otherStack.getPtr()[ix];
-}
+//template <typename T>
+//Stack<T>::Stack(const Stack<T> & otherStack) :
+//    size(otherStack.getStackSize()) 
+//{
+//    stackPtr = new T[size]; 
+//    top = otherStack.getTop();
+// 
+//    for(int ix = 0; ix < top; ix++)
+//        stackPtr[ix] = otherStack.getPtr()[ix];
+//}
  
 template <typename T>
 Stack<T>::~Stack()
@@ -55,18 +55,19 @@ Stack<T>::~Stack()
 template <typename T>
 inline void Stack<T>::push(const T &value)
 {
-    assert(top < size); 
 	top++;
-    stackPtr[top] = value; 
+	if (top>=size)
+		throw "Stack overflow";
+	stackPtr[top] = value; 
 
 }
  
 template <typename T>
 inline T Stack<T>::pop()
-{
-    assert(top > -1); 
- 
-    --top; 
+{ 
+	if (top<0)
+		throw "Stack is already empty"; 
+	--top;
 	return stackPtr[top+1];
 }
  

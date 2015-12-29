@@ -39,7 +39,8 @@ short unsigned int RPN::GetPriority(char s)
 string RPN::GetExpression(string input)
 {
 	string output; //Строка для хранения выражения//?!
-	Stack<char> operStack(MAX); //Стек для хранения операторов
+	int size = input.length();
+	Stack<char> operStack(size); //Стек для хранения операторов
 
 	for (int i = 0; i < input.length(); i++) //Для каждого символа во входной строке
 	{
@@ -177,14 +178,15 @@ double RPN::Calculate(string input)
 
 string RPN::InsertValue(string input/*, string variables*/)
 {
-		string output;
-		
-		string var;
+	bool flag = false;
+	string output;
+	string var;
 	for (int i = 0; i < input.length(); i++) //Для каждого символа во входной строке
 	{
 		string variable;
 		if ((islower(input[i])) || isupper(input[i])) //Если буква
 		{
+			flag = true;
 			//Читаем до разделителя или оператора, что бы получить букву
 			do
 			{
@@ -208,5 +210,7 @@ string RPN::InsertValue(string input/*, string variables*/)
 			output += input[i];
 		}
 	}
+	//if (flag == false)
+	//	output = input;
 	return output;
 }
